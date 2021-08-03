@@ -1,2 +1,2 @@
-DROP DATABASE news_portal_test;
-DROP DATABASE news_portal;
+DROP DATABASE moving_orders_test;
+DROP DATABASE moving_orders;
