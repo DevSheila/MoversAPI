@@ -15,7 +15,7 @@ public class MovingOrdersTest {
     }
 
     public MovingOrders setupMovingOrders (){
-        return new MovingOrders("Johnny","johnnytrejo@gmail.com","Diani,Sunrirse Apartments","Diani,oceanview apartments","Feather Hands Movers",5000,"approved","15:00pm Monday 3 August 2021");
+        return new MovingOrders("Johnny","johnnytrejo@gmail.com","bedsitter","Diani,Sunrirse Apartments","Diani,oceanview apartments","Feather Hands Movers",5000,"approved","15:00pm Monday 3 August 2021");
 
     }
     @Test

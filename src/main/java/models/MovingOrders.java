@@ -6,6 +6,7 @@ public class MovingOrders {
 
     private String user_name;
     private String user_email;
+    private String inventory;
     private String current_location;
     private String new_location;
     private String moving_company;
@@ -13,9 +14,10 @@ public class MovingOrders {
     private String order_status;
     private String pickup_time;
 
-    public MovingOrders(String user_name, String user_email, String current_location, String new_location, String moving_company, int total_price, String order_status, String pickup_time) {
+    public MovingOrders(String user_name, String user_email, String inventory, String current_location, String new_location, String moving_company, int total_price, String order_status, String pickup_time) {
         this.user_name = user_name;
         this.user_email = user_email;
+        this.inventory = inventory;
         this.current_location = current_location;
         this.new_location = new_location;
         this.moving_company = moving_company;
@@ -88,16 +90,24 @@ public class MovingOrders {
         this.pickup_time = pickup_time;
     }
 
+    public String getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(String inventory) {
+        this.inventory = inventory;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MovingOrders)) return false;
         MovingOrders that = (MovingOrders) o;
-        return getTotal_price() == that.getTotal_price() && Objects.equals(getUser_name(), that.getUser_name()) && Objects.equals(getUser_email(), that.getUser_email()) && Objects.equals(getCurrent_location(), that.getCurrent_location()) && Objects.equals(getNew_location(), that.getNew_location()) && Objects.equals(getMoving_company(), that.getMoving_company()) && Objects.equals(getOrder_status(), that.getOrder_status()) && Objects.equals(getPickup_time(), that.getPickup_time());
+        return getTotal_price() == that.getTotal_price() && Objects.equals(getUser_name(), that.getUser_name()) && Objects.equals(getUser_email(), that.getUser_email()) && Objects.equals(getInventory(), that.getInventory()) && Objects.equals(getCurrent_location(), that.getCurrent_location()) && Objects.equals(getNew_location(), that.getNew_location()) && Objects.equals(getMoving_company(), that.getMoving_company()) && Objects.equals(getOrder_status(), that.getOrder_status()) && Objects.equals(getPickup_time(), that.getPickup_time());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser_name(), getUser_email(), getCurrent_location(), getNew_location(), getMoving_company(), getTotal_price(), getOrder_status(), getPickup_time());
+        return Objects.hash(getUser_name(), getUser_email(), getInventory(), getCurrent_location(), getNew_location(), getMoving_company(), getTotal_price(), getOrder_status(), getPickup_time());
     }
 }
