@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class MovingOrders {
 
+    private int id;
     private String user_name;
     private String user_email;
     private String inventory;
@@ -25,6 +26,14 @@ public class MovingOrders {
         this.order_status = order_status;
         this.pickup_time = pickup_time;
     }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public String getUser_name() {
         return user_name;
