@@ -29,6 +29,7 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
         }
     }
 
+
     @Override
     public List<MovingOrders> getMovingOrderByMovingCompany(String moving_company) {
         List<MovingOrders> companyMovingOrders ;
