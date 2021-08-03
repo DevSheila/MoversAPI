@@ -10,4 +10,7 @@ public interface MovingOrdersDao {
     List<MovingOrders> getMovingOrderByMovingCompany(String moving_company);
     List<MovingOrders> getMovingOrderByUserName(String userName);
 
+    MovingOrders findById(int id);
+    void deleteMovingOrderById(int id);
+
 }
