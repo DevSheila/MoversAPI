@@ -23,5 +23,20 @@ public class MovingOrdersTest {
         MovingOrders testDepartment = setupMovingOrders();
         assertEquals("Johnny", testDepartment.getUser_name());
     }
+    @Test
+    public void getUserEmailReturnsCorrectEmail() throws Exception {
+        MovingOrders testDepartment = setupMovingOrders();
+        assertEquals("johnnytrejo@gmail.com", testDepartment.getUser_email());
+    }
+    @Test
+    public void getInventoryReturnsCorrectInventory() throws Exception {
+        MovingOrders testDepartment = setupMovingOrders();
+        assertEquals("bedsitter", testDepartment.getInventory());
+    }
+    @Test
+    public void getCurrentLocationReturnsCorrectCurrentLocation() throws Exception {
+        MovingOrders testDepartment = setupMovingOrders();
+        assertEquals("Diani,Sunrirse Apartments", testDepartment.getCurrent_location());
+    }
 
 }
