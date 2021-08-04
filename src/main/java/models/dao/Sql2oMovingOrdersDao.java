@@ -20,15 +20,7 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql, true)
                     .bind(movingOrder)
-//                    .addParameter("user_name", movingOrder.getUser_name())
-//                    .addParameter("user_email", movingOrder.getUser_email())
-//                    .addParameter("inventory",movingOrder.getInventory())
-//                    .addParameter("current_location",movingOrder.getCurrent_location())
-//                    .addParameter("new_location",movingOrder.getNew_location())
-//                    .addParameter("moving_company",movingOrder.getMoving_company())
-//                    .addParameter("total_price",movingOrder.getTotal_price())
-//                    .addParameter("order_status",movingOrder.getOrder_status())
-//                    .addParameter("pickup_time",movingOrder.getPickup_time())
+
 
                     .executeUpdate()
                     .getKey();
