@@ -4,8 +4,7 @@ import models.dao.Sql2oMovingOrdersDao;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import static spark.Spark.post;
-import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
 
 public class App {
     public static void main(String[] args) {
@@ -15,7 +14,7 @@ public class App {
         staticFileLocation("/public");
 
         String connectionString = "jdbc:postgresql://localhost:5432/movers_api";
-        Sql2o sql2o = new Sql2o(connectionString, "postgres", null);
+        Sql2o sql2o = new Sql2o(connectionString, "postgres", "wildlife");
 
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
 
@@ -27,6 +26,11 @@ public class App {
             return gson.toJson(movingOrder);
         });
 
+        //GET BY ID
+        get("/movingorders/:id","application/json",(request, response) -> {
+            int movingOrder = Integer.parseInt(request.params("id"));
+            return gson.toJson(movingOrdersDao.findById(movingOrder));
+        });
 
     }
 
