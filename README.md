@@ -4,30 +4,30 @@ A REST API for querying and retrieving moving orders by users.
 
 # Setup Instructions
 Clone the repo 
-```aidl
+```shell
 git@github.com:DevSheila/MoversAPI.git
 ```
 Switch to the directory
-```aidl
+```shell
 cd MoversApi
 ```
 Install the dependencies
-```aidl
+```shell
 build gradle
 ```
 Run the app
-```aidl
+```shell
 gradle run
 ```
 
 # Database Setup
 1. In the terminal
 ##### To create the database
-```aidl
+```shell
 psql < create.sql
 ```
 #### To drop the database
-```aidl
+```shell
 psql < drop.sql
 ```
 
