@@ -82,17 +82,6 @@ public class App {
             return gson.toJson(movingOrder);
         });
 
-        //UPDATE
-        put("/movingorders/update/:status", "application/json", (req, res) -> {
-            String movingOrderStatus = req.params("status");
-
-            MovingOrders movingOrder = gson.fromJson(req.body(), MovingOrders.class);
-            movingOrdersDao.update2(movingOrderStatus);
-
-            res.status(201);
-            return gson.toJson(movingOrder);
-        });
-
 
 
         //DELETE
