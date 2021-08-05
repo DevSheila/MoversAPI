@@ -70,6 +70,31 @@ public class App {
             }
 
         });
+
+        //UPDATE
+        put("/movingorders/update/:id/:status", "application/json", (req, res) -> {
+            int movingOrderId = Integer.parseInt(req.params("id"));
+            String movingOrderStatus = req.params("status");
+
+            MovingOrders movingOrder = gson.fromJson(req.body(), MovingOrders.class);
+            movingOrdersDao.update(movingOrderId,movingOrderStatus);
+            res.status(201);
+            return gson.toJson(movingOrder);
+        });
+
+        //UPDATE
+        put("/movingorders/update/:status", "application/json", (req, res) -> {
+            String movingOrderStatus = req.params("status");
+
+            MovingOrders movingOrder = gson.fromJson(req.body(), MovingOrders.class);
+            movingOrdersDao.update2(movingOrderStatus);
+
+            res.status(201);
+            return gson.toJson(movingOrder);
+        });
+
+
+
         //DELETE
         get("/movingorders/:id/delete", "application/json", (req, res) -> {
             int movingOrderId = Integer.parseInt(req.params("id"));
