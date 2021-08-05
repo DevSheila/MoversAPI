@@ -32,7 +32,57 @@ public class App {
             return gson.toJson(movingOrder);
         });
 
+        //READ
+        get("/movingorders/:id", "application/json", (req, res) -> {
+            int movingOrderId = Integer.parseInt(req.params("id"));
+            MovingOrders movingOrderToFind = movingOrdersDao.findById(movingOrderId);
+            if (movingOrderToFind == null) {
+                throw new ApiException(404, String.format("No moving order with the id: \"%s\" exists", req.params("id")));
+            }
+            return gson.toJson(movingOrderToFind);
+        });
 
+        get("/movingorders/user/:userName", "application/json", (req, res) -> {
+            String userName = req.params("userName");
+            List<MovingOrders> movingOrdersByUsername=movingOrdersDao.getMovingOrderByUserName(userName);
+
+            if ( movingOrdersByUsername== null) {
+                throw new ApiException(404, String.format("No moving order with the user name: \"%s\" exists", req.params("userName")));
+            }else if(movingOrdersByUsername.size() ==0){
+                throw new ApiException(404, String.format("No moving order with the user name: \"%s\" exists", req.params("userName")));
+            }else {
+                return gson.toJson(movingOrdersByUsername);
+            }
+
+        });
+
+        get("/movingorders/company/:movingCompany", "application/json", (req, res) -> {
+            String movingCompany = req.params("movingCompany");
+            List<MovingOrders> movingOrdersByCompany=movingOrdersDao.getMovingOrderByMovingCompany(movingCompany);
+
+            if (  movingOrdersByCompany== null) {
+                throw new ApiException(404, String.format("No moving order with the company name: \"%s\" exists", req.params("movingCompany")));
+            }else if(movingOrdersByCompany.size() == 0){
+                throw new ApiException(404, String.format("No moving order with the company name: \"%s\" exists", req.params("movingCompany")));
+            }else{
+                return gson.toJson( movingOrdersByCompany);
+
+            }
+
+        });
+        //DELETE
+        get("/movingorders/:id/delete", "application/json", (req, res) -> {
+            int movingOrderId = Integer.parseInt(req.params("id"));
+            MovingOrders movingOrderToFind = movingOrdersDao.findById(movingOrderId);
+            movingOrdersDao.deleteMovingOrderById(movingOrderId);
+
+            if (movingOrderToFind == null) {
+                throw new ApiException(404, String.format("No moving order with the id: \"%s\" exists", req.params("id")));
+            }else{
+                return "{\"message\":\"Order cancelled .\"}";
+            }
+
+        });
 
         //FILTERS
         exception(ApiException.class, (exception, req, res) -> {
