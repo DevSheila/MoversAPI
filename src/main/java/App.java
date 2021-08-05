@@ -36,6 +36,8 @@ public class App {
 
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
 
+        get("/", (req, res) -> "Hello World");
+
         //CREATE
         post("/movingorders/new", "application/json", (req, res) -> {
             MovingOrders movingOrder = gson.fromJson(req.body(), MovingOrders.class);
