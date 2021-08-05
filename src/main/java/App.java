@@ -31,12 +31,12 @@ public class App {
 //        String connectionString = "jdbc:postgresql://localhost:5432/movers_api";
 //        Sql2o sql2o = new Sql2o(connectionString, "postgres", "wildlife");
 
-        String connectionString = "jdbc:postgresql://ipsoepahlqfvwa:19b4136cef2db8ebe2b2735a8ff8583bc22d92db57d784a0be2ed6a0f1ae216e@ec2-54-173-138-144.compute-1.amazonaws.com:5432/dddmu9votdb2rq";
+        String connectionString = "jdbc:postgresql://ec2-54-173-138-144.compute-1.amazonaws.com:5432/dddmu9votdb2rq"; //
         Sql2o sql2o = new Sql2o(connectionString,"ipsoepahlqfvwa","19b4136cef2db8ebe2b2735a8ff8583bc22d92db57d784a0be2ed6a0f1ae216e");
 
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
 
-        get("/", (req, res) -> "Hello World");
+        get("/", (req, res) -> "It's working!");
 
         //CREATE
         post("/movingorders/new", "application/json", (req, res) -> {
