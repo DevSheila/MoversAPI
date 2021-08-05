@@ -1,5 +1,5 @@
+import exceptions.*;
 import com.google.gson.Gson;
-import exceptions.ApiException;
 import models.MovingOrders;
 import models.dao.Sql2oMovingOrdersDao;
 import org.sql2o.Connection;
@@ -112,19 +112,16 @@ public class App {
 
         //FILTERS
         exception(ApiException.class, (exception, req, res) -> {
-            ApiException err = exception;
             Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.put("status", err.getStatusCode());
-            jsonMap.put("errorMessage", err.getMessage());
+            jsonMap.put("status", exception.getStatusCode());
+            jsonMap.put("errorMessage", exception.getMessage());
             res.type("application/json");
-            res.status(err.getStatusCode());
+            res.status(exception.getStatusCode());
             res.body(gson.toJson(jsonMap));
         });
 
 
-        after((req, res) ->{
-            res.type("application/json");
-        });
+        after((req, res) -> res.type("application/json"));
     }
     }
 
