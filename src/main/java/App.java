@@ -13,14 +13,26 @@ import static spark.Spark.*;
 import static spark.Spark.after;
 
 public class App {
+    static int getHerokuAssignedPort(){
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null){
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }else{
+            return 4567; //return default port
+        }
+    }
     public static void main(String[] args) {
         Connection conn;
         Gson gson = new Gson();
 
+        port(getHerokuAssignedPort());
         staticFileLocation("/public");
 
-        String connectionString = "jdbc:postgresql://localhost:5432/movers_api";
-        Sql2o sql2o = new Sql2o(connectionString, "postgres", null);
+//        String connectionString = "jdbc:postgresql://localhost:5432/movers_api";
+//        Sql2o sql2o = new Sql2o(connectionString, "postgres", "wildlife");
+
+        String connectionString = "jdbc:postgres://ipsoepahlqfvwa:19b4136cef2db8ebe2b2735a8ff8583bc22d92db57d784a0be2ed6a0f1ae216e@ec2-54-173-138-144.compute-1.amazonaws.com:5432/dddmu9votdb2rq";
+        Sql2o sql2o = new Sql2o(connectionString,"ipsoepahlqfvwa","19b4136cef2db8ebe2b2735a8ff8583bc22d92db57d784a0be2ed6a0f1ae216e");
 
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
 
