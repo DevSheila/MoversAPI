@@ -68,7 +68,16 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
         }
     }
 
+    public void update(int id, String status) {
 
+        try(Connection con = sql2o.open()){
+            String sql = "UPDATE moving_orders SET order_status= :status WHERE id= :id";
+            con.createQuery(sql,true)
+                    .addParameter("id", id)
+                    .addParameter("status",status)
+                    .executeUpdate();
+        }
+    }
 
     @Override
     public void deleteMovingOrderById(int id) {
