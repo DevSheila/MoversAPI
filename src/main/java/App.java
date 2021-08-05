@@ -55,6 +55,21 @@ public class App {
             }
 
         });
+
+        get("/movingorders/company/:movingCompany", "application/json", (req, res) -> {
+            String movingCompany = req.params("movingCompany");
+            List<MovingOrders> movingOrdersByCompany=movingOrdersDao.getMovingOrderByMovingCompany(movingCompany);
+
+            if (  movingOrdersByCompany== null) {
+                throw new ApiException(404, String.format("No moving order with the company name: \"%s\" exists", req.params("movingCompany")));
+            }else if(movingOrdersByCompany.size() == 0){
+                throw new ApiException(404, String.format("No moving order with the company name: \"%s\" exists", req.params("movingCompany")));
+            }else{
+                return gson.toJson( movingOrdersByCompany);
+
+            }
+
+        });
         //DELETE
         get("/movingorders/:id/delete", "application/json", (req, res) -> {
             int movingOrderId = Integer.parseInt(req.params("id"));
