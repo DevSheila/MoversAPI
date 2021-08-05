@@ -41,6 +41,20 @@ public class App {
             }
             return gson.toJson(movingOrderToFind);
         });
+
+        get("/movingorders/user/:userName", "application/json", (req, res) -> {
+            String userName = req.params("userName");
+            List<MovingOrders> movingOrdersByUsername=movingOrdersDao.getMovingOrderByUserName(userName);
+
+            if ( movingOrdersByUsername== null) {
+                throw new ApiException(404, String.format("No moving order with the user name: \"%s\" exists", req.params("userName")));
+            }else if(movingOrdersByUsername.size() ==0){
+                throw new ApiException(404, String.format("No moving order with the user name: \"%s\" exists", req.params("userName")));
+            }else {
+                return gson.toJson(movingOrdersByUsername);
+            }
+
+        });
         //DELETE
         get("/movingorders/:id/delete", "application/json", (req, res) -> {
             int movingOrderId = Integer.parseInt(req.params("id"));
