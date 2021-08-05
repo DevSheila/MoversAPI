@@ -32,7 +32,15 @@ public class App {
             return gson.toJson(movingOrder);
         });
 
-
+        //READ
+        get("/movingorders/:id", "application/json", (req, res) -> {
+            int movingOrderId = Integer.parseInt(req.params("id"));
+            MovingOrders movingOrderToFind = movingOrdersDao.findById(movingOrderId);
+            if (movingOrderToFind == null) {
+                throw new ApiException(404, String.format("No moving order with the id: \"%s\" exists", req.params("id")));
+            }
+            return gson.toJson(movingOrderToFind);
+        });
         //DELETE
         get("/movingorders/:id/delete", "application/json", (req, res) -> {
             int movingOrderId = Integer.parseInt(req.params("id"));
