@@ -7,6 +7,7 @@ import org.sql2o.Sql2oException;
 
 
 import java.util.List;
+import java.util.Locale;
 
 public class Sql2oMovingOrdersDao implements MovingOrdersDao {
     private final Sql2o sql2o;
@@ -22,15 +23,6 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql, true)
                     .bind(movingOrder)
-//                    .addParameter("user_name", movingOrder.getUser_name())
-//                    .addParameter("user_email", movingOrder.getUser_email())
-//                    .addParameter("inventory",movingOrder.getInventory())
-//                    .addParameter("current_location",movingOrder.getCurrent_location())
-//                    .addParameter("new_location",movingOrder.getNew_location())
-//                    .addParameter("moving_company",movingOrder.getMoving_company())
-//                    .addParameter("total_price",movingOrder.getTotal_price())
-//                    .addParameter("order_status",movingOrder.getOrder_status())
-//                    .addParameter("pickup_time",movingOrder.getPickup_time())
                     .executeUpdate()
                     .getKey();
             movingOrder.setId(id);
@@ -45,11 +37,11 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
         List<MovingOrders> companyMovingOrders ;
 
         try (Connection con = sql2o.open()) {
-            companyMovingOrders = con.createQuery("SELECT * FROM moving_orders WHERE moving_company = :moving_company")
+            return con.createQuery("SELECT * FROM moving_orders WHERE moving_company = :moving_company")
                     .addParameter("moving_company", moving_company)
                     .executeAndFetch(MovingOrders.class);
         }
-        return companyMovingOrders;
+
     }
 
     @Override
@@ -57,11 +49,13 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
         List<MovingOrders> userMovingOrders;
 
         try (Connection con = sql2o.open()) {
-            userMovingOrders = con.createQuery("SELECT * FROM moving_orders WHERE userName = :userName")
+//            String query = "SELECT * FROM items WHERE LOWER(user_name) LIKE '"+userName.toLowerCase(Locale.ROOT)+"%' OR LOWER(user_name) =LOWER(:userName) ";
+
+           return con.createQuery("SELECT * FROM moving_orders WHERE user_name = :userName")
                     .addParameter("userName", userName)
                     .executeAndFetch(MovingOrders.class);
         }
-        return userMovingOrders;
+
 
     }
 
@@ -73,6 +67,8 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
                     .executeAndFetchFirst(MovingOrders.class);
         }
     }
+
+
 
     @Override
     public void deleteMovingOrderById(int id) {
