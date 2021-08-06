@@ -52,8 +52,16 @@ psql < drop.sql
 |GET     |/movingorders/:id/delete|
 
 # Live link
+<<<<<<< HEAD
 [Live Link]()
 
 # License
 
 MIT
+=======
+[Live Link](https://moversapi.herokuapp.com/)
+
+# License
+
+MIT
+>>>>>>> 657615017a6fdfdb43b943487fa81af304d7a706
