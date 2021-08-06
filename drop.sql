@@ -1,2 +1,2 @@
-DROP DATABASE moving_orders_test;
-DROP DATABASE moving_orders;
+DROP DATABASE movers_api_test;
+DROP DATABASE movers_api;
