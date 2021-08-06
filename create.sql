@@ -18,3 +18,19 @@ CREATE TABLE moving_orders
 );
 
 CREATE DATABASE movers_api_test WITH TEMPLATE movers_api;
+
+
+// data base for movers_bio
+
+CREATE DATABASE movers_bio;
+\c movers_bio
+
+CREATE TABLE moving_movers_bios
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR,
+    extra_Services VARCHAR,
+    contacts int,
+    inventory_charges int,
+    charge_per_distance int
+);
