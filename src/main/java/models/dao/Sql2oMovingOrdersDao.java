@@ -79,6 +79,12 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
         }
     }
 
+    public List<MovingOrders> all() {
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM moving_orders")
+                    .executeAndFetch(MovingOrders.class);
+        }
+    }
     @Override
     public void deleteMovingOrderById(int id) {
         String sql = "DELETE from moving_orders WHERE id=:id";
