@@ -91,4 +91,13 @@ public class Sql2oMovingOrdersDao implements MovingOrdersDao {
             System.out.println(ex);
         }
     }
+
+    public void clearAll() {
+        String sql = "DELETE from moving_orders";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql).executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
 }

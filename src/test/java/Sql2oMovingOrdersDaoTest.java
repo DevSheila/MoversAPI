@@ -9,7 +9,7 @@ public class Sql2oMovingOrdersDaoTest {
 
     @Before
     public void setUp() throws Exception {
-        String connectionString = "jdbc:postgresql://localhost:5432/moving_orders";
+        String connectionString = "jdbc:postgresql://localhost:5432/moving_orders_test";
         Sql2o sql2o = new Sql2o(connectionString, "postgres", null);
 
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
