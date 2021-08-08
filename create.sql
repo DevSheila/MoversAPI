@@ -17,14 +17,6 @@ CREATE TABLE moving_orders
     pickup_time  VARCHAR
 );
 
-CREATE DATABASE movers_api_test WITH TEMPLATE movers_api;
-
-
-// data base for movers_bio
-
-CREATE DATABASE movers_bio;
-\c movers_bio
-
 CREATE TABLE moving_movers_bios
 (
     id SERIAL PRIMARY KEY,
@@ -34,3 +26,5 @@ CREATE TABLE moving_movers_bios
     inventory_charges int,
     charge_per_distance int
 );
+
+CREATE DATABASE movers_api_test WITH TEMPLATE movers_api;

@@ -10,9 +10,10 @@ public interface MoverBioDao {
 
     //get all moversBio
     List<MoverBio>getAll();
+    List<MoverBio> getMoverByName(String moverName);
 
-    void update(String name, String extra_Services,int contacts,int inventory_charges,int charge_per_distance);
+    MoverBio findById(int id);
 
 
-
+    void deleteMoverById(int id);
 }

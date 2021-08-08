@@ -1,6 +1,7 @@
 package models.dao;
 
 import models.MoverBio;
+import models.MovingOrders;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -18,13 +19,14 @@ public class Sql2oMoverBioDao implements MoverBioDao {
     @Override
     public void add(MoverBio moverBio) {
 
-        String sql = "INSERT INTO moverBio(name,inventory_charges,charge_per_distance ,contacts,extra_Services) VALUES (:name,:inventory_charges,:charge_per_distance,:contacts,:extra_Services)";
+        String sql = "INSERT INTO moving_movers_bios(name,inventory_charges,charge_per_distance ,contacts,extra_Services) VALUES (:name,:inventory_charges,:charge_per_distance,:contacts,:extra_Services)";
 
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(moverBio)
                     .executeUpdate()
                     .getKey();
+            moverBio.setId(id);
         } catch (Sql2oException ex) {
             System.out.println(ex);
         }
@@ -34,16 +36,47 @@ public class Sql2oMoverBioDao implements MoverBioDao {
     @Override
     public List<MoverBio> getAll() {
         try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT *FROM moverBio")
+            return con.createQuery("SELECT *FROM moving_movers_bios")
                     .executeAndFetch(MoverBio.class);
         }
     }
 
     @Override
-    public void update(String newName, String newExtra_Services, int newContacts, int newInventory_charges, int newCharge_per_distance) {
-        String sql = "UPDATE moverBio SET(name,extra_Services,contacts,inventory_charges,charge_per_distance) = (:name, :extra_services,:charge_per_distance,:inventory_charges,:contacts)";
-        try(Connection con = sql2o.open()){
+    public List<MoverBio> getMoverByName(String moverName) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM moving_movers_bios WHERE name = :moverName")
+                    .addParameter("moverName",moverName )
+                    .executeAndFetch(MoverBio.class);
+        }
+    }
+
+    @Override
+    public MoverBio findById(int id) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM moving_movers_bios WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(MoverBio.class);
+        }
+    }
+
+    @Override
+    public void deleteMoverById(int id) {
+        String sql = "DELETE from moving_movers_bios WHERE id=:id";
+        try (Connection con = sql2o.open()) {
             con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+    }
+
+    public void update(int id, String newName, String newExtra_Services, int newContacts, int newInventory_charges, int newCharge_per_distance) {
+        String sql = "UPDATE moving_movers_bios SET (name,extra_Services,contacts,inventory_charges,charge_per_distance) = (:newName, :newExtra_Services,:newContacts,:newInventory_charges,:newCharge_per_distance) WHERE id= :id";
+        try(Connection con = sql2o.open()){
+            con.createQuery(sql,true)
+                    .addParameter("id",id)
                     .addParameter("name",newName)
                     .addParameter("extra_Services",newExtra_Services)
                     .addParameter("contacts",newContacts)
