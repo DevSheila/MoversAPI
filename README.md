@@ -38,17 +38,7 @@ psql < drop.sql
 * \c movers_api
 #### Create the required tables
 * CREATE TABLE moving_orders(id SERIAL PRIMARY KEY,user_name VARCHAR,user_email VARCHAR,inventory VARCHAR,current_location VARCHAR,new_location VARCHAR,moving_company VARCHAR,total_price int,\c movers_apiorder_status VARCHAR,\c movers_apipickup_time  VARCHAR\c movers_api);
-#### Create a template
-* CREATE DATABASE movers_api_test WITH TEMPLATE movers_api;
-
-## Create the MOVERS_BIO database
-* CREATE DATABASE movers_bio;
-#### Connect to the database
-* \c movers_bio
-#### Create the required tables
 * CREATE TABLE moving_movers_bios(id SERIAL PRIMARY KEY,name VARCHAR,extra_Services VARCHAR,contacts int,inventory_charges int,charge_per_distance int);
-#### Create a template
-* CREATE DATABASE moving_movers_bios_test WITH TEMPLATE movers_bio;
 
 # Postman
 ### Routes
