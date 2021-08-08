@@ -3,6 +3,7 @@ package models;
 import java.util.Objects;
 
 public class MoverBio {
+    private int id;
     private String extra_Services;
     private String name;
     private int contacts;
@@ -16,6 +17,14 @@ public class MoverBio {
         this.name = name;
         this.inventory_charges =inventory_charges;
         this.contacts = contacts;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getExtra_Services() {

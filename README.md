@@ -32,7 +32,7 @@ psql < drop.sql
 ```
 
 2. In PSQL
-#### Create the database
+## Create the MOVERS_API database
 * CREATE DATABASE movers_api;
 #### Connect to the database
 * \c movers_api
@@ -41,27 +41,37 @@ psql < drop.sql
 #### Create a template
 * CREATE DATABASE movers_api_test WITH TEMPLATE movers_api;
 
+## Create the MOVERS_BIO database
+* CREATE DATABASE movers_bio;
+#### Connect to the database
+* \c movers_bio
+#### Create the required tables
+* CREATE TABLE moving_movers_bios(id SERIAL PRIMARY KEY,name VARCHAR,extra_Services VARCHAR,contacts int,inventory_charges int,charge_per_distance int);
+#### Create a template
+* CREATE DATABASE moving_movers_bios_test WITH TEMPLATE movers_bio;
+
 # Postman
 ### Routes
 | Method | Route |
 |--------|------ |
+|GET     |/movingorders |
 |POST    |/movingorders/new|
 |GET     |/movingorders/:id|
 |GET     |/movingorders/user/:userName|
-|GET    |/movingorders/company/:movingCompany|
-|GET     |/movingorders/:id/delete|
+|PUT     |/movingorders/update/:id/:status|
+|GET     |/movingorders/company/:movingCompany|
+|DELETE  |/movingorders/:id|
+|GET     |/moverbio|
+|POST    |/moverbio/new  |
+|GET     |/moverbio/:id  |
+|GET     |/moverbio/mover/:moverName  |
+|PUT     |/moverbio/update/:id  |
+|DELETE  |/moverbio/:id  |
 
-# Live link
-<<<<<<< HEAD
-[Live Link]()
+# Live Link
+
+[Hosted in Heroku](https://moversapi.herokuapp.com/)
 
 # License
 
 MIT
-=======
-[Live Link](https://moversapi.herokuapp.com/)
-
-# License
-
-MIT
->>>>>>> 657615017a6fdfdb43b943487fa81af304d7a706
