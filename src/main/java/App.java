@@ -2,10 +2,8 @@ import exceptions.*;
 import com.google.gson.Gson;
 import models.MoverBio;
 import models.MovingOrders;
-import models.dao.MoverBioDao;
 import models.dao.Sql2oMoverBioDao;
 import models.dao.Sql2oMovingOrdersDao;
-import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.util.HashMap;
@@ -13,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.String.format;
 import static spark.Spark.*;
 import static spark.Spark.after;
 
@@ -26,7 +25,6 @@ public class App {
         }
     }
     public static void main(String[] args) {
-        Connection conn;
         Gson gson = new Gson();
 
         port(getHerokuAssignedPort());
@@ -36,8 +34,8 @@ public class App {
 //        //change the postgres password to your default password
 //        Sql2o sql2o = new Sql2o(connectionString, "postgres", "wildlife");
 
-        String connectionString = "jdbc:postgresql://ec2-54-173-138-144.compute-1.amazonaws.com:5432/dddmu9votdb2rq"; //
-        Sql2o sql2o = new Sql2o(connectionString,"ipsoepahlqfvwa","19b4136cef2db8ebe2b2735a8ff8583bc22d92db57d784a0be2ed6a0f1ae216e");
+        String connectionString = "jdbc:postgres://jhroevlwfcebmc:c1dee7c40ae9106e443e40e2e820265003ce3d2f1e6655aad069ef80fd922fbd@ec2-3-224-7-166.compute-1.amazonaws.com:5432/dcnqj5lf88vok6"; //
+        Sql2o sql2o = new Sql2o(connectionString,"jhroevlwfcebmc","c1dee7c40ae9106e443e40e2e820265003ce3d2f1e6655aad069ef80fd922fbd");
 
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
         Sql2oMoverBioDao moverBioDao = new Sql2oMoverBioDao(sql2o);
@@ -83,7 +81,7 @@ public class App {
             int movingOrderId = parseInt(req.params("id"));
             MovingOrders movingOrderToFind = movingOrdersDao.findById(movingOrderId);
             if (movingOrderToFind == null) {
-                throw new ApiException(404, String.format("No moving order with the id: \"%s\" exists", req.params("id")));
+                throw new ApiException(404, format("No moving order with the id: \"%s\" exists", req.params("id")));
             }
             return gson.toJson(movingOrderToFind);
         });
@@ -93,7 +91,7 @@ public class App {
             int moverBioId = parseInt(request.params("id"));
             MoverBio moverBioToFindId = moverBioDao.findById(moverBioId);
             if (moverBioToFindId == null){
-                throw new ApiException(404,String.format("No mover bio with the id; \"%s\" exists",request.params("id")));
+                throw new ApiException(404, format("No mover bio with the id; \"%s\" exists",request.params("id")));
             }
             return gson.toJson(moverBioToFindId);
         });
@@ -103,9 +101,9 @@ public class App {
             List<MovingOrders> movingOrdersByUsername=movingOrdersDao.getMovingOrderByUserName(userName);
 
             if ( movingOrdersByUsername== null) {
-                throw new ApiException(404, String.format("No moving order with the user name: \"%s\" exists", req.params("userName")));
+                throw new ApiException(404, format("No moving order with the user name: \"%s\" exists", req.params("userName")));
             }else if(movingOrdersByUsername.size() ==0){
-                throw new ApiException(404, String.format("No moving order with the user name: \"%s\" exists", req.params("userName")));
+                throw new ApiException(404, format("No moving order with the user name: \"%s\" exists", req.params("userName")));
             }else {
                 return gson.toJson(movingOrdersByUsername);
             }
@@ -116,9 +114,9 @@ public class App {
             String moverName = request.params("moverName");
             List<MoverBio> moverBioByName = moverBioDao.getMoverByName(moverName);
             if (moverBioByName == null ){
-                throw new ApiException(404,String.format("No moverbio with the name \"%s\" exists",request.params("moverName")));
+                throw new ApiException(404, format("No moverbio with the name \"%s\" exists",request.params("moverName")));
             }else if (moverBioByName.size() == 0){
-                throw new ApiException(404,String.format("No moverbio with the name \"%s\" exists",request.params("moverName")));
+                throw new ApiException(404, format("No moverbio with the name \"%s\" exists",request.params("moverName")));
             }else{
                 return gson.toJson(moverBioByName);
             }
@@ -129,9 +127,9 @@ public class App {
             List<MovingOrders> movingOrdersByCompany=movingOrdersDao.getMovingOrderByMovingCompany(movingCompany);
 
             if (  movingOrdersByCompany== null) {
-                throw new ApiException(404, String.format("No moving order with the company name: \"%s\" exists", req.params("movingCompany")));
+                throw new ApiException(404, format("No moving order with the company name: \"%s\" exists", req.params("movingCompany")));
             }else if(movingOrdersByCompany.size() == 0){
-                throw new ApiException(404, String.format("No moving order with the company name: \"%s\" exists", req.params("movingCompany")));
+                throw new ApiException(404, format("No moving order with the company name: \"%s\" exists", req.params("movingCompany")));
             }else{
                 return gson.toJson( movingOrdersByCompany);
 
@@ -162,7 +160,7 @@ public class App {
             moverBioDao.update(moverBioId,moverName,moverExtraServices,moverContacts,moverInventoryCharges,moverChargePerDistance);
             response.status(201);
             if (moverBioId != 0) {
-                throw new ApiException(404, String.format("No moving order with the company name: \"%s\" exists", moverName,moverExtraServices,moverInventoryCharges,moverChargePerDistance,moverContacts,moverExtraServices));
+                throw new ApiException(404, format("No moving order with the company name: \"%s\" exists", moverName,moverExtraServices,moverInventoryCharges,moverChargePerDistance,moverContacts,moverExtraServices));
             }
             return gson.toJson(moverBio);
         });
@@ -177,7 +175,7 @@ public class App {
             movingOrdersDao.deleteMovingOrderById(movingOrderId);
 
             if (movingOrderToFind == null) {
-                throw new ApiException(404, String.format("No moving order with the id: \"%s\" exists", req.params("id")));
+                throw new ApiException(404, format("No moving order with the id: \"%s\" exists", req.params("id")));
             }else{
                 return "{\"message\":\"Order cancelled .\"}";
             }
@@ -191,7 +189,7 @@ public class App {
             moverBioDao.deleteMoverById(moverBioId);
             //check if id exists
             if (moverBioToFind == null){
-                throw new ApiException(404,String.format("No moverbio with the id: \"%s\" exists",request.params("id")));
+                throw new ApiException(404, format("No moverbio with the id: \"%s\" exists",request.params("id")));
             }else {
                 return "{\"message\":\"Moverbio deleted\"}";
             }
