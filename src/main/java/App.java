@@ -42,7 +42,7 @@ public class App {
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
         Sql2oMoverBioDao moverBioDao = new Sql2oMoverBioDao(sql2o);
 
-        get("/", (req, res) -> "It's working!");
+        get("/api", (req, res) -> "It's working!");
 
         //get all orders
         get("/api/movingorders","application/json",(request, response) -> {//accepts a request in format JSON
