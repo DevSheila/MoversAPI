@@ -73,20 +73,19 @@ public class Sql2oMoverBioDao implements MoverBioDao {
     }
 
     public void update(int id, String newName, String newExtra_Services, int newContacts, int newInventory_charges, int newCharge_per_distance) {
-        String sql = "UPDATE moving_movers_bios SET (name,extra_Services,contacts,inventory_charges,charge_per_distance) = (:newName, :newExtra_Services,:newContacts,:newInventory_charges,:newCharge_per_distance) WHERE id= :id";
+        String sql = "UPDATE moving_movers_bios SET name=:name,inventory_charges=:inventory_charges,charge_per_distance=:charge_per_distance ,contacts=:contacts,extra_Services=:extra_Services WHERE id= :id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql,true)
                     .addParameter("id",id)
                     .addParameter("name",newName)
-                    .addParameter("extra_Services",newExtra_Services)
-                    .addParameter("contacts",newContacts)
                     .addParameter("inventory_charges",newInventory_charges)
                     .addParameter("charge_per_distance",newCharge_per_distance)
+                    .addParameter("contacts",newContacts)
+                    .addParameter("extra_Services",newExtra_Services)
                     .executeUpdate();
         }catch (Sql2oException ex){
             System.out.println(ex);
         }
-
     }
 }
 

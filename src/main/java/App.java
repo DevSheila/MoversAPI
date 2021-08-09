@@ -33,6 +33,7 @@ public class App {
         staticFileLocation("/public");
 
         String connectionString = "jdbc:postgresql://localhost:5432/movers_api";
+        //change the postgres password to your default password
         Sql2o sql2o = new Sql2o(connectionString, "postgres", "wildlife");
 
 //        String connectionString = "jdbc:postgresql://ec2-54-173-138-144.compute-1.amazonaws.com:5432/dddmu9votdb2rq"; //
@@ -44,7 +45,7 @@ public class App {
         get("/", (req, res) -> "It's working!");
 
         //get all orders
-        get("/movingorders","application/json",(request, response) -> {//accepts a request in format JSON
+        get("/api/movingorders","application/json",(request, response) -> {//accepts a request in format JSON
             if (movingOrdersDao.getAll().size() > 0){
                 return gson.toJson(movingOrdersDao.getAll());
             }else {
@@ -53,7 +54,7 @@ public class App {
         });
 
         //get all moversbio
-        get("/moverbio","application/json",(request, response) -> {//accepts a request in format JSON
+        get("/api/moverbio","application/json",(request, response) -> {//accepts a request in format JSON
             if (moverBioDao.getAll().size() > 0){
                 return gson.toJson(moverBioDao.getAll());
             }else {
@@ -62,7 +63,7 @@ public class App {
         });
 
         //CREATE
-        post("/movingorders/new", "application/json", (req, res) -> {
+        post("/api/movingorders/new", "application/json", (req, res) -> {
             MovingOrders movingOrder = gson.fromJson(req.body(), MovingOrders.class);
             movingOrdersDao.add(movingOrder);
             res.status(201);
@@ -70,7 +71,7 @@ public class App {
         });
 
         //create new movers bio
-        post("/moverbio/new","application/json",(request, response) -> {
+        post("/api/moverbio/new","application/json",(request, response) -> {
             MoverBio moverBio = gson.fromJson(request.body(),MoverBio.class);
             moverBioDao.add(moverBio);
             response.status(201);
@@ -78,7 +79,7 @@ public class App {
         });
 
         //READ
-        get("/movingorders/:id", "application/json", (req, res) -> {
+        get("/api/movingorders/:id", "application/json", (req, res) -> {
             int movingOrderId = parseInt(req.params("id"));
             MovingOrders movingOrderToFind = movingOrdersDao.findById(movingOrderId);
             if (movingOrderToFind == null) {
@@ -88,7 +89,7 @@ public class App {
         });
 
         //get movers bio by id
-        get("/moverbio/:id","application/json",(request, response) -> {
+        get("/api/moverbio/:id","application/json",(request, response) -> {
             int moverBioId = parseInt(request.params("id"));
             MoverBio moverBioToFindId = moverBioDao.findById(moverBioId);
             if (moverBioToFindId == null){
@@ -97,7 +98,7 @@ public class App {
             return gson.toJson(moverBioToFindId);
         });
 
-        get("/movingorders/user/:userName", "application/json", (req, res) -> {
+        get("/api/movingorders/user/:userName", "application/json", (req, res) -> {
             String userName = req.params("userName");
             List<MovingOrders> movingOrdersByUsername=movingOrdersDao.getMovingOrderByUserName(userName);
 
@@ -111,7 +112,7 @@ public class App {
         });
 
         //get mover bio by name
-        get("/moverbio/mover/:moverName","application.json",(request, response) -> {
+        get("/api/moverbio/mover/:moverName","application.json",(request, response) -> {
             String moverName = request.params("moverName");
             List<MoverBio> moverBioByName = moverBioDao.getMoverByName(moverName);
             if (moverBioByName == null ){
@@ -123,7 +124,7 @@ public class App {
             }
         });
 
-        get("/movingorders/company/:movingCompany", "application/json", (req, res) -> {
+        get("/api/movingorders/company/:movingCompany", "application/json", (req, res) -> {
             String movingCompany = req.params("movingCompany");
             List<MovingOrders> movingOrdersByCompany=movingOrdersDao.getMovingOrderByMovingCompany(movingCompany);
 
@@ -139,7 +140,7 @@ public class App {
         });
 
         //UPDATE
-        put("/movingorders/update/:id/:status", "application/json", (req, res) -> {
+        put("/api/movingorders/update/:id/:status", "application/json", (req, res) -> {
             int movingOrderId = parseInt(req.params("id"));
             String movingOrderStatus = req.params("status");
 
@@ -149,25 +150,28 @@ public class App {
             return gson.toJson(movingOrder);
         });
 
-//        //update movers bio
-//        put("/moverbio/update/:id","application/json",(request, response) -> {
-//            int moverBioId = parseInt(request.params("id"));
-//            String moverName = request.params("name");
-//            String moverExtraServices = request.params("extra_Services");
-//            int moverContacts = parseInt(request.params("contacts"));
-//            int moverInventoryCharges = parseInt(request.params("inventory_charges"));
-//            int moverChargePerDistance = parseInt(request.params("charge_per_distance"));
-//
-//            MoverBio moverBio = gson.fromJson(request.body(),MoverBio.class);
-//            moverBioDao.update(moverBioId,moverName,moverExtraServices,moverContacts,moverInventoryCharges,moverChargePerDistance);
-//            response.status(201);
-//            return gson.toJson(moverBio);
-//        });
+        //update movers bio
+        put("/api/moverbio/update/:id/:name/:inventory_charges/:charge_per_distance/:contacts/:extra_Services","application/json",(request, response) -> {
+            int moverBioId = parseInt(request.params("id"));
+            String moverName = request.params("name");
+            int moverInventoryCharges = parseInt(request.params("inventory_charges"));
+            int moverChargePerDistance = parseInt(request.params("charge_per_distance"));
+            int moverContacts = parseInt(request.params("contacts"));
+            String moverExtraServices = request.params("extra_Services");
+            MoverBio moverBio = gson.fromJson(request.body(),MoverBio.class);
+            moverBioDao.update(moverBioId,moverName,moverExtraServices,moverContacts,moverInventoryCharges,moverChargePerDistance);
+            response.status(201);
+            if (moverBioId != 0) {
+                throw new ApiException(404, String.format("No moving order with the company name: \"%s\" exists", moverName,moverExtraServices,moverInventoryCharges,moverChargePerDistance,moverContacts,moverExtraServices));
+            }
+            return gson.toJson(moverBio);
+        });
+
 
 
 
         //DELETE
-        delete("/movingorders/:id", "application/json", (req, res) -> {
+        delete("/api/movingorders/:id", "application/json", (req, res) -> {
             int movingOrderId = parseInt(req.params("id"));
             MovingOrders movingOrderToFind = movingOrdersDao.findById(movingOrderId);
             movingOrdersDao.deleteMovingOrderById(movingOrderId);
@@ -181,7 +185,7 @@ public class App {
         });
 
        //delete mover by id
-        delete("/moverbio/:id","application/json",(request, response) -> {
+        delete("/api/moverbio/:id","application/json",(request, response) -> {
             int moverBioId = parseInt(request.params("id"));
             MoverBio moverBioToFind = moverBioDao.findById(moverBioId);
             moverBioDao.deleteMoverById(moverBioId);
