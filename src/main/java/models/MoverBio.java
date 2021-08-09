@@ -11,12 +11,12 @@ public class MoverBio {
     private int charge_per_distance;
 
 
-    public MoverBio(String extra_Services, String name,int contacts,int inventory_charges,int charge_per_distance ){
-        this.extra_Services = extra_Services;
-        this.charge_per_distance = charge_per_distance;
+    public MoverBio(String name, int inventory_charges, int charge_per_distance, int contacts, String extra_Services) {
         this.name = name;
-        this.inventory_charges =inventory_charges;
+        this.inventory_charges = inventory_charges;
+        this.charge_per_distance = charge_per_distance;
         this.contacts = contacts;
+        this.extra_Services = extra_Services;
     }
 
     public int getId() {

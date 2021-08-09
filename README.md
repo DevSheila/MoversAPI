@@ -44,19 +44,19 @@ psql < drop.sql
 ### Routes
 | Method | Route |
 |--------|------ |
-|GET     |/movingorders |
-|POST    |/movingorders/new|
-|GET     |/movingorders/:id|
-|GET     |/movingorders/user/:userName|
-|PUT     |/movingorders/update/:id/:status|
-|GET     |/movingorders/company/:movingCompany|
-|DELETE  |/movingorders/:id|
-|GET     |/moverbio|
-|POST    |/moverbio/new  |
-|GET     |/moverbio/:id  |
-|GET     |/moverbio/mover/:moverName  |
-|PUT     |/moverbio/update/:id  |
-|DELETE  |/moverbio/:id  |
+|GET     |/api/movingorders |
+|POST    |/api/movingorders/new|
+|GET     |/api/movingorders/:id|
+|GET     |/api/movingorders/user/:userName|
+|PUT     |/api/movingorders/update/:id/:status|
+|GET     |/api/movingorders/company/:movingCompany|
+|DELETE  |/api/movingorders/:id|
+|GET     |/api/moverbio|
+|POST    |/api/moverbio/new  |
+|GET     |/api/moverbio/:id  |
+|GET     |/api/moverbio/mover/:moverName  |
+|PUT     |/api/moverbio/update/:id/:name/:inventory_charges/:charge_per_distance/:contacts/:extra_Services |
+|DELETE  |/api/moverbio/:id  |
 
 # Live Link
 
