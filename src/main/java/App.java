@@ -86,7 +86,11 @@ public class App {
 
         //get all moversbio
         get("/api/moverbio","application/json",(request, response) -> {//accepts a request in format JSON
-            return gson.toJson(moverBioDao.getAll());
+            if (moverBioDao.getAll().size() > 0){
+                return gson.toJson(moverBioDao.getAll());
+            }else {
+                return "{\"message\":\"Sorry, no moverbio are currently listed in the database\"}";
+            }
         });
 
         //CREATE
