@@ -34,6 +34,7 @@ public class App {
 //        //change the postgres password to your default password
 //        Sql2o sql2o = new Sql2o(connectionString, "postgres", "wildlife");
 
+
         String connectionString = "jdbc:postgresql://ec2-3-224-7-166.compute-1.amazonaws.com:5432/dcnqj5lf88vok6"; //
         Sql2o sql2o = new Sql2o(connectionString,"jhroevlwfcebmc","c1dee7c40ae9106e443e40e2e820265003ce3d2f1e6655aad069ef80fd922fbd");
 
