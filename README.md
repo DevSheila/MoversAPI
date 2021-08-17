@@ -44,6 +44,7 @@ psql < drop.sql
 ### Routes
 | Method | Route |
 |--------|------ |
+|GET     |/api   |
 |GET     |/api/movingorders |
 |POST    |/api/movingorders/new|
 |GET     |/api/movingorders/:id|
@@ -60,7 +61,7 @@ psql < drop.sql
 
 # Live Link
 
-[Hosted in Heroku](https://moversapi.herokuapp.com/)
+[Hosted in Heroku](https://moversapi.herokuapp.com/api)
 
 # License
 
