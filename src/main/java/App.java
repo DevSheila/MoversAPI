@@ -35,8 +35,8 @@ public class App {
 //        Sql2o sql2o = new Sql2o(connectionString, "postgres", "wildlife");
 
 
-        String connectionString = "jdbc:postgresql://ec2-3-224-7-166.compute-1.amazonaws.com:5432/dcnqj5lf88vok6"; //
-        Sql2o sql2o = new Sql2o(connectionString,"jhroevlwfcebmc","c1dee7c40ae9106e443e40e2e820265003ce3d2f1e6655aad069ef80fd922fbd");
+        String connectionString = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d30m0vcot17dal"; //
+        Sql2o sql2o = new Sql2o(connectionString,"kdwglinuzvjgyn","38c4452a7ad18a1e727ba30f163712e7bd601c3131ba287e37a91deea3503d80");
 
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
         Sql2oMoverBioDao moverBioDao = new Sql2oMoverBioDao(sql2o);
