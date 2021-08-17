@@ -41,7 +41,39 @@ public class App {
         Sql2oMovingOrdersDao movingOrdersDao = new Sql2oMovingOrdersDao(sql2o);
         Sql2oMoverBioDao moverBioDao = new Sql2oMoverBioDao(sql2o);
 
-        get("/api", (req, res) -> "It's working!");
+        options("/*",
+                (request, response) -> {
+
+                    String accessControlRequestHeaders = request
+                            .headers("Access-Control-Request-Headers");
+                    if (accessControlRequestHeaders != null) {
+                        response.header("Access-Control-Allow-Headers",
+                                accessControlRequestHeaders);
+                    }
+
+                    String accessControlRequestMethod = request
+                            .headers("Access-Control-Request-Method");
+                    if (accessControlRequestMethod != null) {
+                        response.header("Access-Control-Allow-Methods",
+                                accessControlRequestMethod);
+                    }
+
+                    return "OK";
+                });
+
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+
+        //redirect when in home page
+        get("/",(request, response) -> {
+            response.redirect("/api");
+            return null;
+        });
+
+        get("/api", "application/json", (req, res) -> {
+            String homepage = "Movers Api homepage ";
+            res.status(201);
+            return gson.toJson(homepage);
+        });
 
         //get all orders
         get("/api/movingorders","application/json",(request, response) -> {//accepts a request in format JSON
